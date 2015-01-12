@@ -1,4 +1,4 @@
-require 'spec_helper'
+# require 'spec_helper'
 require 'rails_helper'
 
 feature "the signup process" do
@@ -11,10 +11,11 @@ feature "the signup process" do
   end
 
   feature "signing up a user" do
+    before do
+      sign_up_as_ginger_baker
+    end
+
     it "shows username on the homepage after signup" do
-      fill_in "Username", with: 'ginger_baker'
-      fill_in "Password", with: 'longpass'
-      click_on "Sign Up!"
       expect(page).to have_content "ginger_baker"
     end
   end
@@ -22,15 +23,30 @@ feature "the signup process" do
 end
 
 feature "logging in" do
+  before do
+    sign_up_as_ginger_baker
+    log_in_as_ginger_baker
+  end
 
-  it "shows username on the homepage after login"
+  it "shows username on the homepage after login" do
+    expect(page).to have_content('ginger_baker')
+  end
 
 end
 
 feature "logging out" do
 
-  it "begins with logged out state"
+  it "begins with logged out state" do
+    visit root_url
+    expect(page).not_to have_content('ginger_baker')
+  end
 
-  it "doesn't show username on the homepage after logout"
+  it "doesn't show username on the homepage after logout" do
+    sign_up_as_ginger_baker
+    log_in_as_ginger_baker
+
+    click_button "Log Out"
+    expect(page).not_to have_content('ginger_baker')
+  end
 
 end
