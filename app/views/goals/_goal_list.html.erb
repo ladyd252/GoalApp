@@ -1,12 +1,15 @@
 <% @goals.each do |goal| %>
   <% if @user == current_user || !goal.private %>
     <%= link_to goal.description, goal_url(goal) %>
+
     <p>
       Owner: <%= goal.user.username %>
     </p>
+
     <% if goal.completed %>
       <span id="complete_<%= goal.id %>">Goal complete!</span>
     <% end %>
+
     <% if goal.user == current_user %>
       <%= button_to "Delete", goal_url(goal), method: :delete %>
       <form id="toggle_complete" action="<%= goal_url(goal) %>" method="post">
@@ -19,6 +22,15 @@
 
       </form>
     <% end %>
+
     <br>
+    <%= render 'goal_comments/form', goal: goal %>
+
+    <br>
+    <% goal.goal_comments.each do |comment| %>
+        <%= comment.body %><br>
+    <% end %>
+
   <% end %>
+
 <% end %>

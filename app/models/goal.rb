@@ -3,5 +3,7 @@ class Goal < ActiveRecord::Base
   validates :private, :completed, inclusion: [true, false]
 
   belongs_to :user
+  has_many :goal_comments
+
 
 end

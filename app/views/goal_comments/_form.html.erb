@@ -1,0 +1,12 @@
+<form id="goal_comment_form_<%= goal.id %>" action="<%= goal_comments_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label>
+    Goal Comment:
+    <input id='goal_comment_body_<%= goal.id %>' type="text" name="comment[body]">
+  </label>
+
+  <input type="hidden" name="comment[goal_id]" value="<%= goal.id %>">
+
+  <input id='goal_comment_submit_<%= goal.id %>' type="submit" value="Add Comment">
+</form>

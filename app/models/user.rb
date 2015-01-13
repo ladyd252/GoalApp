@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   attr_reader :password
 
   has_many :goals
+  has_many :user_comments
 
   after_initialize :ensure_session_token
 
