@@ -30,16 +30,16 @@ def log_in_as_ginger_baker
   log_in('ginger_baker')
 end
 
-def create_goal
+def create_goal(description = "Read more")
   visit '/goals/new'
-  fill_in 'Description', with: "Read more"
+  fill_in 'Description', with: description
   click_button 'Create Goal!'
   return Goal.last
 end
 
-def create_private_goal
+def create_private_goal(description = "Do evil things")
   visit '/goals/new'
-  fill_in 'Description', with: "Do evil things"
+  fill_in 'Description', with: description
   check 'Private'
   click_button 'Create Goal!'
   return Goal.last
