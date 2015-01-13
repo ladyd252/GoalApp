@@ -1,27 +1,7 @@
 <h1><%= @user.username %></h1>
-<h2> New Goal </h2>
+<h2> Create A Goal </h2>
 
 <%= render 'goals/form' %>
 
 <h2> My goals </h2>
-<% @goals.each do |goal| %>
-  <% if @user == current_user || !goal.private %>
-    <%= link_to goal.description, goal_url(goal) %>
-    <% if goal.completed %>
-      <span id="complete_<%= goal.id %>">Goal complete!</span>
-    <% end %>
-    <% if @user == current_user %>
-      <%= button_to "Delete", goal_url(goal), method: :delete %>
-      <form id="toggle_complete" action="<%= goal_url(goal) %>" method="post">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <input type="hidden" name="_method" value="PATCH">
-
-        <input type="hidden" name="goal[completed]" value="<%= !goal.completed %>">
-
-        <input type="submit" value="Toggle complete">
-
-      </form>
-    <% end %>
-    <br>
-  <% end %>
-<% end %>
+<%= render "goals/goal_list" %>

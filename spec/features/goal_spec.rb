@@ -2,15 +2,17 @@
 require 'rails_helper'
 
 feature "Goal creation" do
+  before :each do
+    sign_up_as_ginger_baker
+  end
 
   it "has a new goal page" do
-    visit "/goals/new"
+    # visit "/goals/new"
     expect(page).to have_content "Create A Goal"
   end
 
   feature "creating a new goal" do
     before :each do
-      sign_up_as_ginger_baker
       create_goal
     end
 
@@ -100,6 +102,19 @@ feature "Goal completion" do
     it "Should show when a goal is complete" do
       @goal.update(completed: true)
       visit user_url(@goal.user)
+      expect(page).to have_selector("#complete_#{@goal.id}")
+    end
+  end
+
+  context "on the goal index page" do
+    it "Shouldn't show when a goal is incomplete" do
+      visit goals_url
+      expect(page).not_to have_selector("#complete_#{@goal.id}")
+    end
+
+    it "Should show when a goal is complete" do
+      @goal.update(completed: true)
+      visit goals_url
       expect(page).to have_selector("#complete_#{@goal.id}")
     end
   end
