@@ -29,3 +29,18 @@ end
 def log_in_as_ginger_baker
   log_in('ginger_baker')
 end
+
+def create_goal
+  visit '/goals/new'
+  fill_in 'Description', with: "Read more"
+  click_button 'Create Goal!'
+  return Goal.last
+end
+
+def create_private_goal
+  visit '/goals/new'
+  fill_in 'Description', with: "Do evil things"
+  check 'Private'
+  click_button 'Create Goal!'
+  return Goal.last
+end

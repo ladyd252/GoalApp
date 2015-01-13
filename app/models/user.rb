@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  has_many :goals
+
   after_initialize :ensure_session_token
 
   def self.find_by_credentials(username, password)
@@ -22,6 +24,7 @@ class User < ActiveRecord::Base
 
   def reset_session_token!
     self.session_token = SecureRandom.urlsafe_base64
+    save!
   end
 
   def password=(password)

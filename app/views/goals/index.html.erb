@@ -1,0 +1,7 @@
+<% @goals.where(private: false).each do |goal| %>
+<%= link_to goal.description, goal_url(goal) %>
+<% if goal.user == current_user %>
+<%= button_to "Delete", goal_url(goal), method: :delete %>
+<% end %>
+<br>
+<% end %>
